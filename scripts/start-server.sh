@@ -49,7 +49,7 @@ chmod -R 777 ${DATA_DIR}
 if [ ! -f ${SERVER_DIR}/data/server.cfg ]; then
 	cp ${SERVER_DIR}/server/server.cfg ${SERVER_DIR}/data/server.cfg
 fi
-if grep -rq '//hostname "Xonotic $g_xonoticversion Server"' ${SERVER_DIR}/data/server.cfg; then
+if grep -rq '//hostname "AAA Edgegap Server version $g_xonoticversion "' ${SERVER_DIR}/data/server.cfg; then
 	sed -i '/\/\/hostname "Xonotic $g_xonoticversion Server"/c\hostname "Xonotic Docker"	// this name will appear on the server list (the $g_xonoticversion gets replaced with the current version)' ${SERVER_DIR}/data/server.cfg
 fi
 echo "---Server ready---"
