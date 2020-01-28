@@ -1,10 +1,10 @@
 FROM ich777/debian-baseimage
 
-LABEL maintainer="admin@minenet.at"
+LABEL maintainer="mathieu@edgegap.com"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends curl unzip && \
-	rm -rf /var/lib/apt/lists/*
+        apt-get -y install --no-install-recommends curl unzip && \
+        rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
@@ -17,14 +17,16 @@ ENV UID=99
 ENV GID=100
 
 RUN mkdir $DATA_DIR && \
-	mkdir $SERVER_DIR && \
-	useradd -d $DATA_DIR -s /bin/bash --uid $UID --gid $GID xonotic && \
-	chown -R xonotic $DATA_DIR && \
-	ulimit -n 2048
+        mkdir $SERVER_DIR && \
+        useradd -d $DATA_DIR -s /bin/bash --uid $UID --gid $GID xonotic && \
+        chown -R xonotic $DATA_DIR && \
+        ulimit -n 2048
 
 ADD /scripts/ /opt/scripts/
+COPY scripts/prep-server.sh /opt/scripts/
 RUN chmod -R 770 /opt/scripts/ && \
-	chown -R xonotic /opt/scripts
+        chown -R xonotic /opt/scripts
+RUN /opt/scripts/prep-server.sh
 
 USER xonotic
 
